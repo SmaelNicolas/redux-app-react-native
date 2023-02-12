@@ -1,8 +1,9 @@
 import { Image, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 import { styles } from "./styles";
 
-export const ItemDetailScreen = ({ navigation, route }) => {
-	const product = route.params.item;
+export const ItemDetailScreen = ({ navigation }) => {
+	const product = useSelector((state) => state.productsRoot.selected);
 	return (
 		<SafeAreaView style={styles.container}>
 			<TouchableOpacity
