@@ -1,20 +1,32 @@
+import { useEffect } from "react";
 import { FlatList, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { ProductView } from "../../components";
-import { productList } from "../../data/productList";
+import {
+	filterProduct,
+	selectProduct,
+} from "../../store/actions/products.actions";
 import { styles } from "./styles";
 
-export const CategoryProductsScreen = ({ navigation, route }) => {
-	let cat = route.params.name;
+export const CategoryProductsScreen = ({ navigation }) => {
+	const dispatch = useDispatch();
+	const categorySelected = useSelector(
+		(state) => state.categoriesRoot.selected
+	);
+	const filteredProds = useSelector(
+		(state) => state.productsRoot.filteredProducts
+	);
+	useEffect(() => {
+		dispatch(filterProduct(categorySelected.name));
+	}, []);
+
 	const onPressed = (item) => {
-		navigation.navigate("Detail", {
-			item,
-			title: item.title,
-		});
+		dispatch(selectProduct(item));
+		navigation.navigate("Detail");
 	};
-	const renderItem = ({ item }) =>
-		item.category.toLowerCase() === cat.toLowerCase() && (
-			<ProductView item={item} onPressed={onPressed} />
-		);
+	const renderItem = ({ item }) => (
+		<ProductView item={item} onPressed={onPressed} />
+	);
 	const keyExtractor = (item) => item.id;
 
 	return (
@@ -25,7 +37,7 @@ export const CategoryProductsScreen = ({ navigation, route }) => {
 				<Text style={styles.textBack}>⬅ Go Back</Text>
 			</TouchableOpacity>
 			<FlatList
-				data={productList}
+				data={filteredProds}
 				keyExtractor={keyExtractor}
 				renderItem={renderItem}
 			/>
