@@ -9,7 +9,11 @@ const ShopStack = createNativeStackNavigator();
 
 export const ShopNavigator = () => {
 	return (
-		<ShopStack.Navigator initialRoute="Home">
+		<ShopStack.Navigator
+			initialRoute="Home"
+			screenOptions={{
+				headerShown: false,
+			}}>
 			<ShopStack.Screen
 				name="Home"
 				options={{
