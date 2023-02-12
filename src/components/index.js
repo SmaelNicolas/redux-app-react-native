@@ -1,3 +1,5 @@
+export { CartItem } from "./CartItem";
 export { CategoryView } from "./CategoryView";
-export { ProductView } from "./ProductDetailView";
-export { ProductDetailView } from "./ProductView";
+export { OrderDetailView } from "./OrderDetailView";
+export { OrderView } from "./OrderView";
+export { ProductView } from "./ProductView";
