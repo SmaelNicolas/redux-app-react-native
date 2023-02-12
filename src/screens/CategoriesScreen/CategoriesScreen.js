@@ -1,13 +1,16 @@
 import { FlatList, Image, SafeAreaView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { CategoryView } from "../../components";
-import { categoryList } from "../../data/categories";
+import { selectCategory } from "../../store/actions/category.actions";
 import { styles } from "./styles";
 
 export const CategoriesScreen = ({ navigation }) => {
-	const onPressed = ({ name }) => {
-		navigation.navigate("Products", {
-			name,
-		});
+	const dispatch = useDispatch();
+
+	const categories = useSelector((state) => state.categoriesRoot.categories);
+	const onPressed = (item) => {
+		dispatch(selectCategory(item));
+		navigation.navigate("Products");
 	};
 
 	const keyExtractor = (item) => item.id;
@@ -21,7 +24,7 @@ export const CategoriesScreen = ({ navigation }) => {
 				source={{ uri: "https://i.ibb.co/r2vcM4H/logo.png" }}
 			/>
 			<FlatList
-				data={categoryList}
+				data={categories}
 				keyExtractor={keyExtractor}
 				renderItem={renderItem}
 			/>
